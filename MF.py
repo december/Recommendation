@@ -17,15 +17,10 @@ data = fw.readlines()
 fw.close()
 train = lil_matrix((10000, 10000))
 sign = lil_matrix((10000, 10000))
-#print iddic
-cnt = 0
 for line in data:
 	temp = line.split(' ')
 	train[iddic[temp[0]], int(temp[1])-1] = int(temp[2])
 	sign[iddic[temp[0]], int(temp[1])-1] = 1
-	cnt += 1
-	if cnt % 10000 == 0:
-		print cnt
 print 'Get train matrix.'
 fw = open('../Project2-data/netflix_test.txt')
 
@@ -33,13 +28,13 @@ data = fw.readlines()
 fw.close()
 test = lil_matrix((10000, 10000))
 flag = lil_matrix((10000, 10000))
+n = len(data)
 for line in data:
 	temp = line.split(' ')
 	test[iddic[temp[0]], int(temp[1])-1] = int(temp[2])
 	flag[iddic[temp[0]], int(temp[1])-1] = 1
 print 'Get the test quest.'
 print datetime.datetime.now() - begin
-n = len(answer)
 sn = n ** 0.5
 k = 50
 lbd = 0.01

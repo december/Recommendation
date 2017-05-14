@@ -48,7 +48,7 @@ n = len(answer)
 k = 50
 lbd = 0.01
 alpha = 0.01
-J = 1000000
+J = 100
 X = train.todense()
 U = np.mat(np.random.random(size=(10000, k)))
 V = np.mat(np.random.random(size=(10000, k)))
@@ -57,15 +57,15 @@ cnt = 0
 iterlist = list()
 losslist = list()
 rmselist = list()
-while J > 1:
+while J < 1000:
 	delta = U * V.T - X
-	#print delta[:3,:3]
+	print delta[:3,:3]
 	D = np.multiply(A, delta)
-	#print D[:3,:3]
+	print D[:3,:3]
 	du = D * V + 2 * lbd * U
-	#print du[:3,:3]
+	print du[:3,:3]
 	dv = D.T * U + 2 * lbd * V
-	#print dv[:3,:3]
+	print dv[:3,:3]
 	U = U - alpha * du
 	print U[:3,:3]
 	V = V - alpha * dv

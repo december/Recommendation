@@ -43,6 +43,7 @@ for line in data:
 		print cnt
 print 'Get the test quest.'
 print datetime.datetime.now() - begin
+n = len(testuser)
 k = 50
 lbd = 0.01
 alpha = 0.01

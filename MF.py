@@ -1,5 +1,6 @@
 import numpy as np
 import datetime
+import matplotlib.pyplot as plt
 from scipy.sparse import lil_matrix
 
 begin = datetime.datetime.now()
@@ -53,6 +54,8 @@ U = np.mat(np.random.random(size=(10000, k)))
 V = np.mat(np.random.random(size=(10000, k)))
 A = sign.todense()
 cnt = 0
+losslist = list()
+rmselist = list()
 while J > 100:
 	delta = U * V.T - X
 	D = np.multiply(A, delta)
@@ -63,10 +66,14 @@ while J > 100:
 	J = 0.5 * (np.linalg.norm(D) ** 2) + lbd * (np.linalg.norm(U) ** 2) + lbd * (np.linalg.norm(V) ** 2)
 	cnt += 1
 	print cnt
+	losslist.append(J)
 	print J
 	Y = U * V.T
 	rmse = 0
 	for i in range(n):
-		rmse += (Y[testuser[i], testflim[i]] - result[i]) ** 2
-	print (rmse / n) ** 0.5
+		rmse += (Y[testuser[i], testflim[i]] - answer[i]) ** 2
+	rmse = (rmse / n) ** 0.5
+	rmselist.append(rmse)
+	print rmse
+
 

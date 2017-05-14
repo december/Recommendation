@@ -38,7 +38,7 @@ print datetime.datetime.now() - begin
 sn = n ** 0.5
 k = 50
 lbd = 0.01
-alpha = 0.001
+alpha = 0.0001
 lastJ = 0
 loss = 100
 X = train.todense()

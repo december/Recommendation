@@ -28,32 +28,30 @@ for line in data:
 		print cnt
 print 'Get train matrix.'
 fw = open('../Project2-data/netflix_test.txt')
-testuser = list()
-testflim = list()
-answer = list()
+
 data = fw.readlines()
 fw.close()
-cnt = 0
+test = lil_matrix((10000, 10000))
+flag = lil_matrix((10000, 10000))
 for line in data:
 	temp = line.split(' ')
-	testuser.append(iddic[temp[0]])
-	testflim.append(int(temp[1])-1)
-	answer.append(int(temp[2]))
-	cnt += 1
-	if cnt % 10000 == 0:
-		print cnt
+	test[iddic[temp[0]], int(temp[1])-1] = int(temp[2])
+	flag[iddic[temp[0]], int(temp[1])-1] = 1
 print 'Get the test quest.'
 print datetime.datetime.now() - begin
 n = len(answer)
+sn = n ** 0.5
 k = 50
 lbd = 0.01
-alpha = 0.0001
+alpha = 0.01
 lastJ = 0
 loss = 100
 X = train.todense()
 U = np.mat(np.random.normal(size=(10000, k)))
 V = np.mat(np.random.normal(size=(10000, k)))
 A = sign.todense()
+W = test.todense()
+F = flag.todense()
 cnt = 0
 iterlist = list()
 losslist = list()
@@ -81,10 +79,9 @@ while loss > 0.01:
 	lastJ = J
 	print loss
 	Y = U * V.T
-	rmse = 0
-	for i in range(n):
-		rmse += (Y[testuser[i], testflim[i]] - answer[i]) ** 2
-	rmse = (rmse / n) ** 0.5
+	R = np.multiply(Y, F)
+	E = R - W
+	rmse = np.linalg.norm(E) / sn
 	rmselist.append(rmse)
 	print rmse
 iterlist = np.array(iterlist)

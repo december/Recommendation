@@ -44,14 +44,14 @@ for line in data:
 		print cnt
 print 'Get the test quest.'
 print datetime.datetime.now() - begin
-n = len(testuser)
+n = len(answer)
 k = 50
 lbd = 0.01
 alpha = 0.01
 J = 1000000
 X = train.todense()
-U = np.mat(np.random.random(size=(10000, k))) / 10
-V = np.mat(np.random.random(size=(10000, k))) / 10
+U = np.mat(np.random.random(size=(10000, k)))
+V = np.mat(np.random.random(size=(10000, k)))
 A = sign.todense()
 cnt = 0
 iterlist = list()
@@ -59,11 +59,17 @@ losslist = list()
 rmselist = list()
 while J > 1:
 	delta = U * V.T - X
+	print delta[:3,:3]
 	D = np.multiply(A, delta)
+	print D[:3,:3]
 	du = D * V + 2 * lbd * U
+	print du[:3,:3]
 	dv = D.T * U + 2 * lbd * V
+	print dv[:3,:3]
 	U = U - alpha * du
+	print U[:3,:3]
 	V = V - alpha * dv
+	print V[:3,:3]
 	J = 0.5 * (np.linalg.norm(D) ** 2) + lbd * (np.linalg.norm(U) ** 2) + lbd * (np.linalg.norm(V) ** 2)
 	cnt += 1
 	iterlist.append(cnt)

@@ -50,13 +50,14 @@ lbd = 0.01
 alpha = 0.01
 J = 1000000
 X = train.todense()
-U = np.mat(np.random.random(size=(10000, k)))
-V = np.mat(np.random.random(size=(10000, k)))
+U = np.mat(np.random.random(size=(10000, k))) / 10
+V = np.mat(np.random.random(size=(10000, k))) / 10
 A = sign.todense()
 cnt = 0
+iterlist = list()
 losslist = list()
 rmselist = list()
-while J > 100:
+while J > 1:
 	delta = U * V.T - X
 	D = np.multiply(A, delta)
 	du = D * V + 2 * lbd * U
@@ -65,6 +66,7 @@ while J > 100:
 	V = V - alpha * dv
 	J = 0.5 * (np.linalg.norm(D) ** 2) + lbd * (np.linalg.norm(U) ** 2) + lbd * (np.linalg.norm(V) ** 2)
 	cnt += 1
+	iterlist.append(cnt)
 	print cnt
 	losslist.append(J)
 	print J
@@ -75,5 +77,10 @@ while J > 100:
 	rmse = (rmse / n) ** 0.5
 	rmselist.append(rmse)
 	print rmse
-
-
+iterlist = np.array(iterlist)
+losslist = np.array(losslist)
+rmselist = np.array(rmselist)
+plt.plot(iterlist, losslist, 'b')
+plt.plot(iterlist, rmselist, 'r')
+plt.savefig('result_'+str(k)+'_'+str(lbd)+'.png')
+plt.cla()

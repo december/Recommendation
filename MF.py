@@ -39,8 +39,6 @@ sn = n ** 0.5
 k = 50
 lbd = 0.01
 alpha = 0.0001
-lastJ = 0
-loss = 100
 X = train.todense()
 U = np.mat(np.random.normal(size=(10000, k)))
 V = np.mat(np.random.normal(size=(10000, k)))
@@ -51,28 +49,24 @@ cnt = 0
 iterlist = list()
 losslist = list()
 rmselist = list()
-while loss > 0.01:
+while cnt < 1000:
 	delta = U * V.T - X
-	#print delta[:3,:3]
 	D = np.multiply(A, delta)
-	#print D[:3,:3]
 	du = D * V + 2 * lbd * U
-	#print du[:3,:3]
 	dv = D.T * U + 2 * lbd * V
-	#print dv[:3,:3]
 	U = U - alpha * du
-	#print U[:3,:3]
 	V = V - alpha * dv
-	#print V[:3,:3]
 	J = 0.5 * (np.linalg.norm(D) ** 2) + lbd * (np.linalg.norm(U) ** 2) + lbd * (np.linalg.norm(V) ** 2)
 	cnt += 1
 	iterlist.append(cnt)
 	print cnt
 	losslist.append(J)
 	print J
+	'''
 	loss = abs(lastJ-J)
 	lastJ = J
 	print loss
+	'''
 	Y = U * V.T
 	R = np.multiply(Y, F)
 	E = R - W

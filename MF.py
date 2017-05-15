@@ -36,7 +36,7 @@ for line in data:
 print 'Get the test quest.'
 print datetime.datetime.now() - begin
 sn = n ** 0.5
-k = 50
+k = 20
 lbd = 0.001
 alpha = 0.0001
 X = train.todense()

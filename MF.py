@@ -37,7 +37,7 @@ print 'Get the test quest.'
 print datetime.datetime.now() - begin
 sn = n ** 0.5
 k = 20
-lbd = 0.001
+lbd = 0.01
 alpha = 0.0001
 X = train.todense()
 U = np.mat(np.random.normal(size=(10000, k)))
